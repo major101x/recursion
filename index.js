@@ -62,15 +62,39 @@ function sort(arr) {
     const arrLeftHalf = arr.slice(0, half);
     const arrRightHalf = arr.slice(half);
 
-    const leftHalfFirstElement = arrLeftHalf[0];
-    const rightHalfFirstElement = arrRightHalf[0];
+    const sortedLeft = sort(arrLeftHalf);
+    const sortedRight = sort(arrRightHalf);
 
-    if (leftHalfFirstElement < rightHalfFirstElement) {
-        console.log([...sort(arrLeftHalf), ...sort(arrRightHalf)])
-        return [...sort(arrLeftHalf), ...sort(arrRightHalf)];
-    } else {
-        return [...sort(arrRightHalf), ...sort(arrLeftHalf)];
+    function merge(arrayA, arrayB) {
+      let arrayC = [];
+      let i = 0;
+      let j = 0;
+      let k = 0;
+      while (i < arrayA.length && j < arrayB.length) {
+        if (arrayA[i] < arrayB[j]) {
+          arrayC[k] = arrayA[i];
+          k++;
+          i++;
+        } else {
+          arrayC[k] = arrayB[j];
+          k++;
+          j++;
+        }
+      }
+      for (; i < arrayA.length; i++) {
+        arrayC[k] = arrayA[i];
+        k++;
+      }
+      for (; j < arrayB.length; j++) {
+        arrayC[k] = arrayB[j];
+        k++;
+      }
+      return arrayC;
     }
+
+    const result = merge(sortedLeft, sortedRight);
+
+    return result;
   }
 }
 
